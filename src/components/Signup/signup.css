@@ -1,0 +1,54 @@
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    /* background-color: #f0f2f5; */
+  }
+  
+  .login-form {
+    width: 100%;
+    max-width: 400px;
+    background-color: white;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .login-button {
+    background-color: #1877f2; /* Facebook blue */
+    border-color: #1877f2;
+    font-weight: bold;
+    margin-bottom: 15px; /* Space between login and create account buttons */
+  }
+  
+  .login-button:hover {
+    background-color: #145dbf;
+    border-color: #145dbf;
+  }
+  
+  .forgot-password {
+    text-align: right;
+    margin-bottom: 20px; /* Spacing between password field and login button */
+  }
+  
+  .forgot-password a {
+    color: #1877f2; /* Facebook blue */
+    font-size: 14px;
+  }
+  
+  .forgot-password a:hover {
+    text-decoration: underline;
+  }
+  
+  .create-account-button {
+    background-color: #42b72a; /* Facebook's green button */
+    color: white;
+    font-weight: bold;
+    margin-top: 10px;
+  }
+  
+  .create-account-button:hover {
+    background-color: #36a420;
+  }
+  
