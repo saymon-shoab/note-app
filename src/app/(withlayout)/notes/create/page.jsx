@@ -1,10 +1,13 @@
 "use client";
 
 import React, { useState, useMemo } from "react";
-import SimpleMDE from "react-simplemde-editor";
+import dynamic from "next/dynamic";
 import "easymde/dist/easymde.min.css";
 import axios from "axios";
 import { message } from "antd";
+
+const SimpleMDE = dynamic(() => import("react-simplemde-editor"), { ssr: false });
+
 
 const CreateNewNotes = () => {
   const [noteContent, setNoteContent] = useState(""); // Rich text content
@@ -110,11 +113,10 @@ const CreateNewNotes = () => {
             id="noteContent"
             value={noteContent}
             onChange={setNoteContent}
-            options={editorOptions} // Memoized options
+            options={editorOptions} 
           />
         </div>
 
-        {/* Tags Input */}
         <div style={{ marginBottom: "20px" }}>
           <label htmlFor="tags" style={{ display: "block", marginBottom: "8px" }}>
             Tags (e.g., #todo, #important)
@@ -135,7 +137,6 @@ const CreateNewNotes = () => {
           />
         </div>
 
-        {/* Submit Button */}
         <button
           type="submit"
           disabled={isSubmitting}

@@ -22,7 +22,8 @@ const NotesPage = () => {
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
 
   // Fetch notes
-  const fetchNotes = async (params = {}) => {
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const fetchNotes = useCallback(async (params = {}) => {
     setLoading(true);
     try {
       const response = await axios.get(
@@ -44,22 +45,9 @@ const NotesPage = () => {
     } finally {
       setLoading(false);
     }
-  };
+  });
 
-  // Share Note
-  const handleShare = async (noteId, type) => {
-    try {
-      const response = await axios.post(
-        `https://6749427886802029663051ce.mockapi.io/notesApi/api/v1/notes/${noteId}/share`,
-        { type } // Type can be 'public' or 'private'
-      );
-      navigator.clipboard.writeText(response.data.link);
-      message.success(`${type === "public" ? "Public" : "Private"} link copied to clipboard!`);
-    } catch (error) {
-      console.error("Failed to generate share link:", error);
-      message.error("Failed to generate share link.");
-    }
-  };
+ 
 
  // Export to PDF
  const handleExportPDF = (note) => {
@@ -116,7 +104,7 @@ const NotesPage = () => {
 
   useEffect(() => {
     fetchNotes();
-  }, [currentPage, pageSize, debouncedSearchTerm, sortBy, sortOrder]);
+  }, [currentPage, pageSize, debouncedSearchTerm, sortBy, sortOrder, fetchNotes]);
 
   // Define columns
   const columns = [
