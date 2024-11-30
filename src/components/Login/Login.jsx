@@ -14,7 +14,6 @@ const LoginPage = () => {
 
   
   const onSubmit = async (data) => {
-    console.log(data);
     const { email, password } = data; 
   
     try {
@@ -23,13 +22,6 @@ const LoginPage = () => {
       );
   
       const user = userQueryResponse?.data[0]; // MockAPI returns an array; take the first user
-      console.log("user", user);
-    //   return
-      if (!user) {
-        // If no user is found, show an error
-        message.error("User not found. Please check your email.");
-        return;
-      }
   
       if (user.password !== password) {
         message.error("Incorrect password. Please try again.");

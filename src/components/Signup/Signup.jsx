@@ -14,20 +14,12 @@ const SignupPage = () => {
   const router = useRouter();
   const onSubmit = async (data) => {
     const { confirmPassword, ...finalValue } = data;
-  
-    // Add a default role field
     finalValue.role = 'user';
-  
-    console.log("finalData", finalValue);
-  
     try {
-      // Check if the email already exists
       const checkEmailResponse = await axios.get(
         `https://6749427886802029663051ce.mockapi.io/notesApi/api/v1/user?email=${finalValue.email}`
       );
-      console.log("checkEmailResponse", checkEmailResponse);
       if (checkEmailResponse.data.length > 0) {
-        // If the email exists, throw an error
         message.error("User already exists with this email.");
         return;
       }
