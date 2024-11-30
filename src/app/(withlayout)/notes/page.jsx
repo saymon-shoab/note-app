@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import ActionBarTable from "@/components/ActionBarTable/ActionBarTable";
 import { Button, Input, Table, Dropdown, Menu, message } from "antd";
@@ -22,7 +22,6 @@ const NotesPage = () => {
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
 
   // Fetch notes
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   const fetchNotes = useCallback(async (params = {}) => {
     setLoading(true);
     try {
@@ -45,7 +44,7 @@ const NotesPage = () => {
     } finally {
       setLoading(false);
     }
-  });
+  },[currentPage,pageSize, debouncedSearchTerm, sortBy, sortOrder]);
 
  
 
