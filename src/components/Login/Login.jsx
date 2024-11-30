@@ -39,7 +39,7 @@ const LoginPage = () => {
       const { password: _, ...userInfo } = user; 
       localStorage.setItem("userinfo", JSON.stringify(userInfo));
   
-      router.push("/profile");
+      router.push("/notes");
       message.success("User logged in successfully");
     } catch (err) {
       console.error(err);

@@ -11,16 +11,16 @@ import Loading from "../Loading";
 
 const DashboardLoayout = ({children}) => {
   const userLoggedIn = isLoggedIn()
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
+  console.log("isLoading", isLoading);
   const router = useRouter()
   useEffect(()=>{
-    // setIsLoading(true)
    if (!userLoggedIn) {
      router.push("/login")
    }
-   setIsLoading(true)
-  },[router,isLoading])
-  return !isLoading ? <Loading /> : (
+   setIsLoading(false)
+  },[router, isLoading, userLoggedIn])
+  return isLoading ? <Loading /> : (
     <Layout hasSider>
      <Sidebar />
      <Contents>  {children} </Contents>
