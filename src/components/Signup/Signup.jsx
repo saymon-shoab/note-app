@@ -13,29 +13,27 @@ import axios from "axios";
 const SignupPage = () => {
   const router = useRouter();
   const onSubmit = async (data) => {
-    const { confirmPassword, ...finalValue } = data;
-    finalValue.role = 'user';
+    const { confirmPassword, ...userDetails } = data;
+    userDetails.role = "user";
+
     try {
-      const checkEmailResponse = await axios.get(
-        `https://6749427886802029663051ce.mockapi.io/notesApi/api/v1/user?email=${finalValue.email}`
-      );
-      if (checkEmailResponse.data.length > 0) {
-        message.error("User already exists with this email.");
-        return;
-      }
   
-      // Proceed to create a new user
-      const res = await axios.post(
-        'https://6749427886802029663051ce.mockapi.io/notesApi/api/v1/user',
-        finalValue
+      const createUserResponse = await axios.post(
+        "https://6749427886802029663051ce.mockapi.io/notesApi/api/v1/user",
+        userDetails
       );
-      if (res) {
-        router.push("/login");
-        message.success("Account created successfully");
+      if (createUserResponse) {
+        message.success("Account created successfully!");
+        router.push("/login"); // Redirect to the login page
       }
     } catch (error) {
-      console.error(error);
-      message.error("Oops, something went wrong...");
+      console.error("Error during user registration:", error);
+  
+      if (error.response && error.response.status === 500) {
+        message.error("Server error. Please try again later.");
+      } else {
+        message.error("Something went wrong. Please check your inputs.");
+      }
     }
   };
   
@@ -55,7 +53,7 @@ const SignupPage = () => {
   
         <div className="">
           <Form
-            className="login-form"
+            className="login-forim"
             submitHandler={onSubmit}
             resolver={yupResolver(singupSchema)}
           >
