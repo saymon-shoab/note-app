@@ -9,7 +9,7 @@ import "./signup.css";
 import { singupSchema } from "@/schemas/formSchema";
 import { yupResolver } from "@hookform/resolvers/yup";
 import axios from "axios";
-
+import { baseUrl } from "@/constants/baseUrl";
 const SignupPage = () => {
   const router = useRouter();
   const onSubmit = async (data) => {
@@ -19,12 +19,12 @@ const SignupPage = () => {
     try {
   
       const createUserResponse = await axios.post(
-        "https://6749427886802029663051ce.mockapi.io/notesApi/api/v1/user",
+        `${baseUrl}/user`,
         userDetails
       );
       if (createUserResponse) {
         message.success("Account created successfully!");
-        router.push("/login"); // Redirect to the login page
+        router.push("/login"); 
       }
     } catch (error) {
       console.error("Error during user registration:", error);

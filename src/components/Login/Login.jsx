@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation'
 import { yupResolver } from "@hookform/resolvers/yup";
 import axios from "axios";
 import { loginSechema } from "@/schemas/formSchema";
+import { baseUrl } from '@/constants/baseUrl'
 
 const LoginPage = () => {
   const router = useRouter()
@@ -18,10 +19,10 @@ const LoginPage = () => {
   
     try {
       const userQueryResponse = await axios.get(
-        `https://6749427886802029663051ce.mockapi.io/notesApi/api/v1/user?email=${email}`
+        `${baseUrl}/user?email=${email}`
       );
   
-      const user = userQueryResponse?.data[0]; // MockAPI returns an array; take the first user
+      const user = userQueryResponse?.data[0]; 
   
       if (user.password !== password) {
         message.error("Incorrect password. Please try again.");

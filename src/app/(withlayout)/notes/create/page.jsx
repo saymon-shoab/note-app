@@ -5,17 +5,17 @@ import dynamic from "next/dynamic";
 import "easymde/dist/easymde.min.css";
 import axios from "axios";
 import { message } from "antd";
+import { baseUrl } from "@/constants/baseUrl";
 
 const SimpleMDE = dynamic(() => import("react-simplemde-editor"), { ssr: false });
 
 
 const CreateNewNotes = () => {
-  const [noteContent, setNoteContent] = useState(""); // Rich text content
-  const [tags, setTags] = useState(""); // Inline tags
-  const [title, setTitle] = useState(""); // Title of the note
-  const [isSubmitting, setIsSubmitting] = useState(false); // Submission state
+  const [noteContent, setNoteContent] = useState(""); 
+  const [tags, setTags] = useState(""); 
+  const [title, setTitle] = useState(""); 
+  const [isSubmitting, setIsSubmitting] = useState(false); 
 
-  // Memoized editor options to avoid unnecessary re-renders
   const editorOptions = useMemo(
     () => ({
       placeholder: "Write your note...",
@@ -40,7 +40,7 @@ const CreateNewNotes = () => {
     []
   );
 
-  // Handle form submission
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -58,7 +58,7 @@ const CreateNewNotes = () => {
     try {
       setIsSubmitting(true);
       const response = await axios.post(
-        "https://6749427886802029663051ce.mockapi.io/notesApi/api/v1/notes",
+        `${baseUrl}/notes`,
         payload,
         {
           headers: {

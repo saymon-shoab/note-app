@@ -8,6 +8,7 @@ import { ReloadOutlined, ShareAltOutlined, ExportOutlined } from "@ant-design/ic
 import Link from "next/link";
 import { useDebounce } from "@/hook/useDebounce";
 import { jsPDF } from "jspdf"
+import { baseUrl } from '@/constants/baseUrl'
 
 const NotesPage = () => {
   const [notes, setNotes] = useState([]);
@@ -21,12 +22,11 @@ const NotesPage = () => {
 
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
 
-  // Fetch notes
   const fetchNotes = useCallback(async (params = {}) => {
     setLoading(true);
     try {
       const response = await axios.get(
-        `https://6749427886802029663051ce.mockapi.io/notesApi/api/v1/notes`,
+        `${baseUrl}/notes`,
         {
           params: {
             page: params.page || currentPage,
@@ -48,7 +48,6 @@ const NotesPage = () => {
 
  
 
- // Export to PDF
  const handleExportPDF = (note) => {
     const doc = new jsPDF();
     doc.text(`Title: ${note.title}`, 10, 10);
@@ -56,7 +55,6 @@ const NotesPage = () => {
     doc.save(`note_${note.id}.pdf`);
   };
 
-  // Export to Markdown
   const handleExportMarkdown = (note) => {
     const markdown = `# ${note.title}\n\n${note.note}`;
     const blob = new Blob([markdown], { type: 'text/markdown' });
@@ -66,7 +64,6 @@ const NotesPage = () => {
     link.click();
   };
 
-  // Export to Plain Text
   const handleExportPlainText = (note) => {
     const text = `Title: ${note.title}\n\n${note.note}`;
     const blob = new Blob([text], { type: 'text/plain' });
@@ -77,7 +74,6 @@ const NotesPage = () => {
   };
 
 
-  // Reset filters
   const resetFilters = () => {
     setSearchTerm("");
     setSortBy(null);
@@ -85,14 +81,12 @@ const NotesPage = () => {
     fetchNotes({ search: "", sortBy: null, sortOrder: null });
   };
 
-  // Handle pagination
   const handlePaginationChange = (page, newPageSize) => {
     setCurrentPage(page);
     setPageSize(newPageSize);
     fetchNotes({ page, pageSize: newPageSize });
   };
 
-  // Handle table changes
   const handleTableChange = (pagination, filters, sorter) => {
     const { field, order } = sorter;
     const newSortOrder = order === "ascend" ? "asc" : order === "descend" ? "desc" : null;
@@ -105,7 +99,6 @@ const NotesPage = () => {
     fetchNotes();
   }, [currentPage, pageSize, debouncedSearchTerm, sortBy, sortOrder, fetchNotes]);
 
-  // Define columns
   const columns = [
     {
       title: "ID",
